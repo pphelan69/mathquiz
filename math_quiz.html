@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>FiveTables</title>
+    <meta name="generator" content="BBEdit 11.6" />
+
+    <link href="./math_quiz.css" rel="stylesheet" type="text/css">
+
+</head>
+
+
+<script type="text/javascript">
+
+
+    // Returns a random number between min (inclusive) and max (exclusive)
+    function getRandNumber(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        var x = Math.floor(Math.random() * (max - min)) + min;
+        return x;
+    }
+
+    function checkres(btnList,correctValue,rowID) {
+
+        var index;
+        var result = "";
+
+        for (index = 0; index < btnList.length; ++index) {
+            if (document.getElementById(btnList[index]).style.borderColor === "blue"){
+                if (document.getElementById(btnList[index]).innerHTML === correctValue) {
+                    result = "correct";
+                    break;
+                }
+                else {
+                    result = "wrong";
+                    break;
+                }
+            }
+
+        }
+
+        if ( result === "correct") {
+            document.getElementById(rowID).src = "./images/correct_icon.png";
+        }
+        else if (result === "wrong") {
+            document.getElementById(rowID).src = "./images/wrong_icon.png";
+        }
+        else {
+            result === "unanswered";
+            document.getElementById(rowID).src = "./images/question_icon.png";
+        }
+
+        return result;
+
+
+    }
+
+    function setButtonValues(btnList,correctValue) {
+
+        var correctBtn = btnList[getRandNumber(0,4)];
+        var index;
+        for (index = 0; index < btnList.length; ++index) {
+            if (btnList[index] == correctBtn) {
+                document.getElementById(btnList[index]).innerHTML=correctValue;
+            }
+            else {
+                document.getElementById(btnList[index]).innerHTML=getRandNumber(Number(correctValue)-10,Number(correctValue)+10);
+            }
+        }
+
+
+    }
+
+    function setButtonBorder(btnID) {
+
+        <!-- Need to parse row index and choice index example: "row1_choice1"  -->
+        var buttonRowIndex    = btnID.substring(3,4);
+        var buttonChoiceIndex = btnID.substring(11,btnID.length);
+
+        for (index = 1; index < 5; ++index) {
+            buttonID = "row" + buttonRowIndex + "_choice" + index;
+            if (index == buttonChoiceIndex) {
+                document.getElementById(buttonID).style.borderColor = "blue";
+                document.getElementById(buttonID).style.borderWidth = "thick";
+            }
+            else {
+                document.getElementById(buttonID).style.borderColor = "green";
+                document.getElementById(buttonID).style.borderWidth = "thin";
+            }
+        }
+
+    }
+
+    function getOperationResult(equation) {
+
+        var operand1 = document.getElementById(equation[0]).value;
+        var operator = document.getElementById(equation[1]).value;
+        var operand2 = document.getElementById(equation[2]).value;
+
+        var result = 0;
+
+        switch(operator) {
+            case "X":
+                result = operand1 * operand2;
+                break;
+            case "/":
+                result = operand1 / operand2;
+                break;
+            case "+":
+                result = Number(operand1) + Number(operand2);
+                break;
+            case "-":
+                result = operand1 - operand2;
+                break;
+            default:
+                break;
+        }
+
+        return result;
+
+
+    }
+
+    function initializeButtonValues(){
+        var row1_Operands = ["row1_operand1","row1_operator","row1_operand2"];
+        var row2_Operands = ["row2_operand1","row2_operator","row2_operand2"];
+        var row3_Operands = ["row3_operand1","row3_operator","row3_operand2"];
+
+        var row1ButonIDs  = ["row1_choice1","row1_choice2","row1_choice3","row1_choice4"];
+        var row2ButonIDs  = ["row2_choice1","row2_choice2","row2_choice3","row2_choice4"];
+        var row3ButonIDs  = ["row3_choice1","row3_choice2","row3_choice3","row3_choice4"];
+
+        setButtonValues(row1ButonIDs,getOperationResult(row1_Operands).toString());
+        setButtonValues(row2ButonIDs,getOperationResult(row2_Operands).toString());
+        setButtonValues(row3ButonIDs,getOperationResult(row3_Operands).toString());
+
+
+    }
+
+    function checkResults() {
+        var row1_Operands = ["row1_operand1","row1_operator","row1_operand2"];
+        var row2_Operands = ["row2_operand1","row2_operator","row2_operand2"];
+        var row3_Operands = ["row3_operand1","row3_operator","row3_operand2"];
+
+        var row1ButonIDs  = ["row1_choice1","row1_choice2","row1_choice3","row1_choice4"];
+        var row2ButonIDs  = ["row2_choice1","row2_choice2","row2_choice3","row2_choice4"];
+        var row3ButonIDs  = ["row3_choice1","row3_choice2","row3_choice3","row3_choice4"];
+
+
+        checkres(row1ButonIDs,getOperationResult(row1_Operands).toString(),"row1_result");
+        checkres(row2ButonIDs,getOperationResult(row2_Operands).toString(),"row2_result");
+        checkres(row3ButonIDs,getOperationResult(row3_Operands).toString(),"row3_result");
+
+    }
+
+
+
+
+</script>
+
+<body onload="initializeButtonValues()">
+
+<div class="container">
+
+    <header>
+        <h1>Quiz - Maths Tables</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#">QUIZ</a></li>
+        </ul>
+    </nav>
+
+    <article id="6times">
+
+        <input type="number" id="row1_operand1" class="input" value="6">
+        <select name="operator" id="row1_operator" class="button buttonNumbers">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="/">/</option>
+            <option value="X" selected>X</option>
+        </select>
+        <input type="number" id="row1_operand2" class="input" value="6">
+        <button id="row1_equals" class="button buttonEquals" onclick="initializeButtonValues()">=</button>
+        <button id="row1_choice1" class="button buttonNumbers" onclick="setButtonBorder('row1_choice1')"></button>
+        <button id="row1_choice2" class="button buttonNumbers" onclick="setButtonBorder('row1_choice2')"></button>
+        <button id="row1_choice3" class="button buttonNumbers" onclick="setButtonBorder('row1_choice3')"></button>
+        <button id="row1_choice4" class="button buttonNumbers" onclick="setButtonBorder('row1_choice4')"></button>
+        <img id="row1_result" src="./images/question_icon.png"alt="Smiley face" height="25" width="25">
+        <p></p>
+
+
+        <input type="number" id="row2_operand1" class="input" value="6">
+        <select name="operator" id="row2_operator" class="button buttonNumbers">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="/">/</option>
+            <option value="X" selected>X</option>
+        </select>
+        <input type="number" id="row2_operand2" class="input" value="7">
+        <button id="row2_equals" class="button buttonEquals" onclick="initializeButtonValues()">=</button>
+        <button id="row2_choice1" class="button buttonNumbers" onclick="setButtonBorder('row2_choice1')"></button>
+        <button id="row2_choice2" class="button buttonNumbers" onclick="setButtonBorder('row2_choice2')"></button>
+        <button id="row2_choice3" class="button buttonNumbers" onclick="setButtonBorder('row2_choice3')"></button>
+        <button id="row2_choice4" class="button buttonNumbers" onclick="setButtonBorder('row2_choice4')"></button>
+        <img id="row2_result" src="./images/question_icon.png"alt="Smiley face" height="25" width="25">
+        <p></p>
+
+
+        <input type="number" id="row3_operand1" class="input" value="6">
+        <select name="operator" id="row3_operator" class="button buttonNumbers">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="/">/</option>
+            <option value="X" selected>X</option>
+        </select>
+        <input type="number" id="row3_operand2" class="input" value="8">
+        <button id="row3_equals" class="button buttonEquals" onclick="initializeButtonValues()">=</button>
+        <button id="row3_choice1" class="button buttonNumbers" onclick="setButtonBorder('row3_choice1')"></button>
+        <button id="row3_choice2" class="button buttonNumbers" onclick="setButtonBorder('row3_choice2')"></button>
+        <button id="row3_choice3" class="button buttonNumbers" onclick="setButtonBorder('row3_choice3')"></button>
+        <button id="row3_choice4" class="button buttonNumbers" onclick="setButtonBorder('row3_choice4')"></button>
+        <img id="row3_result" src="./images/question_icon.png"alt="Smiley face" height="25" width="25">
+        <p></p>
+
+
+
+
+
+        <button id="check_test" align="center" class="button buttonChoices" onclick="checkResults()">Check Test!</button>
+
+
+
+    </article>
+
+    <footer>Copyright © NetEire.com</footer>
+
+</div>
+
+
+
+</body>
+
+</html>

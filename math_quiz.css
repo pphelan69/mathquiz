@@ -1,0 +1,97 @@
+
+.input {
+    background-color: #4CAF50;
+    border:solid 1px #BFBDBD;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.button {
+    background-color: #4CAF50;
+    border:solid 1px #BFBDBD;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+
+.checkbutton {
+    background-color:yellow;
+    border: none;
+    color: black;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    margin-top:22%;
+    margin-bottom:0%;
+    box-shadow: 2px 2px 0 #828181 inset;
+}
+
+.buttonNumbers {
+    background-color: #F8FF33;
+    border: 1px solid #4CAF50;
+}
+
+.buttonEquals {
+    background-color:white;
+    border: 1px solid #4CAF50;
+}
+
+.buttonNeutral {
+    background-color: #008CBA;
+    border: 1px solid #4CAF50;
+}
+
+.buttonCorrect {
+    background-color: #4CAF50;
+}
+
+.buttonWrong {
+    background-color: #f44336;
+}
+
+div.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
+header, footer {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul a {
+    text-decoration: none;
+}
+
+article {
+    margin-left: 170px;
+    border-left: 1px solid gray;
+    padding: 1em;
+    overflow: hidden;
+}
+
+nav {
+    float: left;
+    max-width: 160px;
+    margin: 0;
+    padding: 1em;
+}
